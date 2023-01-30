@@ -37,7 +37,7 @@ class SMTReader:
                     auth_token)
 
                 # if an error occured when getting the reading, wait another 5 minutes and then try to get the reading
-                while status_code_read == 1:
+                if status_code_read == 1:
                     self.__commonHelper.log_error(
                         "Still pending, starting another timer for {} minutes".format(str(self.__wait_interval)))
                     time.sleep(self.__wait_interval * 60)
