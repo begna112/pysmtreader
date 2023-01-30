@@ -3,7 +3,8 @@ import json
 import time
 import datetime
 import traceback
-
+from requests.packages import urllib3
+urllib3.disable_warnings()
 
 class SMTReader:
 
@@ -36,7 +37,7 @@ class SMTReader:
                     auth_token)
 
                 # if an error occured when getting the reading, wait another 5 minutes and then try to get the reading
-                if status_code_read == 1:
+                while status_code_read == 1:
                     self.__commonHelper.log_error(
                         "Still pending, starting another timer for {} minutes".format(str(self.__wait_interval)))
                     time.sleep(self.__wait_interval * 60)
@@ -45,6 +46,9 @@ class SMTReader:
             elif status_code_ondemand == "5031":  # 5031 represents too many requests in an hour
                 self.__commonHelper.log_error(
                     "Looks like too many requests have been sent, can't get the reading this hour")
+            elif status_code_ondemand == "5032":  # 5032 represents too many requests in a day (limit 24)
+                self.__commonHelper.log_error(
+                    "Looks like too the 24 requests per day limit has been surpassed. Can't get a reading until midnight.")
             else:  # some other error occured calling the api
                 self.__commonHelper.log_error(
                     "There was a problem calling the rest api")

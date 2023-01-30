@@ -25,7 +25,7 @@ smartmetertexas: # smartmetertexas.com
     password: _REPLACE_ # Update with your password to access smartmetertexas.com
     esiid: _REPLACE_ # Update with your ESSID, you can find from your electric bill or once you login to smartmetertexas.com
     meter_number: _REPLACE_ # Update with your Meter Number, you can find in your electric bill or once you login to smartmetertexas.com
-    poll_interval_minutes: 60 # 0: disable, do set below 30 as smartmetertexas.com will not allow reading more than twice in an hour
+    poll_interval_minutes: 60 # 0: disable, do not set below 30 as smartmetertexas.com will not allow reading more than twice in an hour. There is also a 24 requests per day limit that restarts at midnight.
     wait_interval_before_ondemand_read_minutes: 5
     force_first_read: False # if true it will attempt to read Smart Meter Texas, otherwise at poll_interval
 
